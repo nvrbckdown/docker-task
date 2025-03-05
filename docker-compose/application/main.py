@@ -1,16 +1,21 @@
 from flask import Flask, jsonify
-import psycopg2
+import psycopg2, os
 
 app = Flask(__name__)
 
 def get_movies():
+    pg_database = os.environ.get("POSTGRES_DB", "admin")
+    pg_port = os.environ.get("POSTGRES_PORT", "5432")
+    pg_user = os.environ.get("POSTGRES_USER", "admin")
+    pg_password = os.environ.get("POSTGRES_PASSWORD", "123321")
+    pg_host = os.environ.get("POSTGRES_HOST", "localhost")
     try:
         connection = psycopg2.connect(
-            database="movies",
-            user="moviemaker",
-            password="SuPerSeCrETPassWORD",
-            host="postgres",
-            port="5432"
+            database = pg_database,
+            user = pg_user,
+            password = pg_password,
+            host = pg_host,
+            port = pg_port
         )
         
         cursor = connection.cursor()
